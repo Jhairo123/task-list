@@ -6,6 +6,7 @@ import { useTask } from "../customHook.js";
 export default function TaskList() {
   const [
     handleButtonAdd,
+    handleTaskDelete,
     handleButtonDelete,
     dataList,
     setDataList,
@@ -13,6 +14,8 @@ export default function TaskList() {
     setInputValue,
     textAreaValue,
     setTextAreaValue,
+    handleCheckboxChange,
+    isChecked,
   ] = useTask();
 
   const [error, setError] = useState({
@@ -87,7 +90,7 @@ export default function TaskList() {
         ...error,
         textArea: "",
       }));
-  }, [inputValue, textAreaValue, dataList, error]); // Guarda cuando cambian
+  }, [inputValue, textAreaValue, dataList]); // Guarda cuando cambian
 
   // Guardar el valor en localStorage cuando el input cambie
 
@@ -162,10 +165,11 @@ export default function TaskList() {
           </div>
         </form>
         <div className="contenedorTaskList2">
-          {dataList.map((arrayTarea, id) => (
+          {dataList.map((arrayTarea) => (
             <Task
-              key={id}
-              mensaje={arrayTarea.titulo}
+              key={arrayTarea.id}
+              id={arrayTarea.id}
+              mensaje={arrayTarea.titulo + " id " + arrayTarea.id}
               descripcion={arrayTarea.descripcion}
             />
           ))}
