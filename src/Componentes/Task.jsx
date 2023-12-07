@@ -1,21 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import { useTask } from "../customHook.js";
+import { useContext, useState } from "react";
+import { MyContext } from "../createContext";
 
 export default function Task({ id, mensaje, descripcion }) {
-  const [
-    handleButtonAdd,
-    handleTaskDelete,
-    handleButtonDelete,
-    dataList,
-    setDataList,
-    inputValue,
-    setInputValue,
-    textAreaValue,
-    setTextAreaValue,
-    handleCheckboxChange,
-    isChecked,
-  ] = useTask();
+  const [isVisible, setIsVisible] = useState(true);
+
+  const { handleTaskEdit, handleTaskDelete, handleCheckboxChange, isChecked } =
+    useContext(MyContext);
+
   // const [isChecked, setIsChecked] = useState(
   //   localStorage.getItem("isCheckedValue")
   // );
@@ -38,6 +30,10 @@ export default function Task({ id, mensaje, descripcion }) {
   //   // console.log(isChecked);
   // };
 
+  const handleToggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <div
       style={{
@@ -49,34 +45,50 @@ export default function Task({ id, mensaje, descripcion }) {
         borderRadius: "1rem",
       }}
     >
-      {/* checkbox */}
-      <input
-        id="checkbox1"
-        type="checkbox"
-        className="opcion1"
-        checked={JSON.parse(isChecked)}
-        onChange={handleCheckboxChange}
-      />
-
-      {/* Label tarea */}
-      <label className="label">{mensaje}</label>
-
-      {/* imagen editar */}
-      <img
-        className="imagen"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcgSizhklDH657yz3n7DSH6nCripsKtMhds9M8xic_cZm04rHSkwiNcg_fg502AWSC48g&usqp=CAU"
-        onClick={() => handleTaskDelete(id)}
-      />
-
-      {/* imagen eliminar */}
-      <img
-        className="imagen"
-        src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-delete-button-3d-icon-png-image_8633077.png"
-        onClick={() => handleTaskDelete(id)}
-      />
-
-      {/* Label descripcion */}
-      <label className="lbl2">{descripcion}</label>
+      <div style={{ display: isVisible ? "block" : "none" }}>
+        {/* imagen editar */}
+        <img
+          className="imagen"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcgSizhklDH657yz3n7DSH6nCripsKtMhds9M8xic_cZm04rHSkwiNcg_fg502AWSC48g&usqp=CAU"
+          onClick={() => handleToggleVisibility()}
+        />
+        {/* imagen eliminar */}
+        <img
+          className="imagen"
+          src="https://png.pngtree.com/png-clipart/20220926/original/pngtree-delete-button-3d-icon-png-image_8633077.png"
+          onClick={() => handleTaskDelete(id)}
+        />
+        <br />
+        {/* checkbox */}
+        <input
+          id="checkbox1"
+          type="checkbox"
+          className="opcion1"
+          checked={JSON.parse(isChecked)}
+          onChange={handleCheckboxChange}
+        />
+        {/* Label tarea */}
+        <label className="label">{mensaje}</label>
+        {/* Label descripcion */}
+        <br />
+        <label className="lbl2">{descripcion}</label>
+      </div>
+      <div style={{ display: !isVisible ? "block" : "none" }}>
+        <form onSubmit={handleTaskEdit}>
+          <input
+            style={{ width: "12.5rem", height: "1rem" }}
+            type="text"
+            placeholder="Renombrar la tarea"
+          />
+          <textarea
+            style={{ width: "12.5rem", height: "1.5rem" }}
+            placeholder="Editar la descripcion"
+          />
+          <br />
+          <button type="submit">Guardar</button>
+          <button onClick={handleToggleVisibility}>Cancelar</button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -39,11 +39,11 @@ export const useTask = () => {
         estado: false,
       };
       setDataList([...dataList, newData]);
-      // if (index >= 1) newData[index].id = newData[index - 1].id + 1;
-      // else newData[index].id = ++index;
       setInputValue("");
       setTextAreaValue("");
       alert("Se ha añadido la tarea a la lista satisfactoriamente");
+      // if (index >= 1) dataList[index].id = dataList[index - 1].id + 1;
+      // else dataList[index].id = ++index;
     } else alert("No se pudo crear, la tarea es muy corta");
   };
 
@@ -55,20 +55,25 @@ export const useTask = () => {
       // localStorage.clear();
     }
   };
-  const handleTaskDelete = (id) => {
-    console.log(dataList());
 
-    const a = dataList.filter((list) => list.id != id);
-    setDataList(a);
-    alert("La tarea ha sido eliminada correctamente");
+  const handleTaskDelete = (id) => {
+    setDataList(dataList.filter((list) => list.id != id));
+    alert("La tarea sera eliminada con exito");
   };
 
-  //   const handleCheckboxChange = (event) => {
-  //     setIsChecked(event.target.checked);
-  //   };
-  //retornar objeto
+  const handleTaskEdit = (e) => {
+    console.log(e);
+
+    // if (index >= 0) {
+    //   dataList[index] = { ...dataList[index], ...data };
+    //   setDataList([...dataList]);
+    //   alert("tarea actualizada correctamente");
+    // }
+    // else alert(`La tarea con el ID ${id} no existe`);
+  };
   return [
     handleButtonAdd,
+    handleTaskEdit,
     handleTaskDelete,
     handleButtonDelete,
     dataList,

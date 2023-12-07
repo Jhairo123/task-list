@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import Task from "./Task";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTask } from "../customHook.js";
+import { MyContext } from "../createContext.js";
 
 export default function TaskList() {
-  const [
+  const [enableButton, setEnableButton] = useState(false);
+  const {
     handleButtonAdd,
-    handleTaskDelete,
     handleButtonDelete,
     dataList,
     setDataList,
@@ -14,9 +15,7 @@ export default function TaskList() {
     setInputValue,
     textAreaValue,
     setTextAreaValue,
-    handleCheckboxChange,
-    isChecked,
-  ] = useTask();
+  } = useContext(MyContext);
 
   const [error, setError] = useState({
     inputText: "",
@@ -151,11 +150,7 @@ export default function TaskList() {
               value={textAreaValue}
               onChange={handleTextareaChange}
             ></textarea>
-            <button
-              className="grid-item-b"
-              id="agregarTarea"
-              // onClick={handleButtonAdd}
-            >
+            <button className="grid-item-b" id="agregarTarea">
               {"+"}
             </button>
             <label></label>
@@ -169,7 +164,7 @@ export default function TaskList() {
             <Task
               key={arrayTarea.id}
               id={arrayTarea.id}
-              mensaje={arrayTarea.titulo + " id " + arrayTarea.id}
+              mensaje={arrayTarea.titulo}
               descripcion={arrayTarea.descripcion}
             />
           ))}
