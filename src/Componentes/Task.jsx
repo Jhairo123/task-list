@@ -2,9 +2,12 @@
 import { useContext, useState } from "react";
 import { MyContext } from "../createContext";
 
-export default function Task({ id, mensaje, descripcion }) {
+export default function Task({ id, title, description }) {
   const [isVisible, setIsVisible] = useState(true);
-
+  const [editField, setEditField] = useState({
+    title: "",
+    description: "",
+  });
   const { handleTaskEdit, handleTaskDelete, handleCheckboxChange, isChecked } =
     useContext(MyContext);
 
@@ -32,6 +35,19 @@ export default function Task({ id, mensaje, descripcion }) {
 
   const handleToggleVisibility = () => {
     setIsVisible(!isVisible);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleTaskEdit(id, editField);
+    handleToggleVisibility();
+  };
+
+  const handleOnChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(editField);
+
+    setEditField({ ...editField, [name]: value });
   };
 
   return (
@@ -65,29 +81,40 @@ export default function Task({ id, mensaje, descripcion }) {
           type="checkbox"
           className="opcion1"
           checked={JSON.parse(isChecked)}
-          onChange={handleCheckboxChange}
+          onChange={(e) => handleCheckboxChange(e)}
         />
         {/* Label tarea */}
-        <label className="label">{mensaje}</label>
+        <label className="label">{title}</label>
         {/* Label descripcion */}
         <br />
-        <label className="lbl2">{descripcion}</label>
+        <label className="lbl2">{description}</label>
       </div>
       <div style={{ display: !isVisible ? "block" : "none" }}>
-        <form onSubmit={handleTaskEdit}>
+        <form
+          style={{
+            display: "inline",
+          }}
+          onSubmit={handleSubmit}
+        >
           <input
             style={{ width: "12.5rem", height: "1rem" }}
             type="text"
+            name="title"
+            defaultValue={title}
             placeholder="Renombrar la tarea"
+            onChange={handleOnChange}
           />
           <textarea
             style={{ width: "12.5rem", height: "1.5rem" }}
+            name="description"
+            defaultValue={description}
             placeholder="Editar la descripcion"
+            onChange={handleOnChange}
           />
           <br />
           <button type="submit">Guardar</button>
-          <button onClick={handleToggleVisibility}>Cancelar</button>
         </form>
+        <button onClick={() => handleToggleVisibility()}>Cancelar</button>
       </div>
     </div>
   );

@@ -164,8 +164,8 @@ export default function TaskList() {
             <Task
               key={arrayTarea.id}
               id={arrayTarea.id}
-              mensaje={arrayTarea.titulo}
-              descripcion={arrayTarea.descripcion}
+              title={arrayTarea.title}
+              description={arrayTarea.description}
             />
           ))}
         </div>

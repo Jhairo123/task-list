@@ -24,6 +24,7 @@ export const useTask = () => {
 
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
+
     // localStorage.setItem("isCheckedValue", isChecked);
     // console.log(isChecked);
   };
@@ -34,8 +35,8 @@ export const useTask = () => {
       const newData = {
         // id: index,
         id: uuidv4(),
-        titulo: inputValue,
-        descripcion: textAreaValue,
+        title: inputValue,
+        description: textAreaValue,
         estado: false,
       };
       setDataList([...dataList, newData]);
@@ -61,15 +62,13 @@ export const useTask = () => {
     alert("La tarea sera eliminada con exito");
   };
 
-  const handleTaskEdit = (e) => {
-    console.log(e);
-
-    // if (index >= 0) {
-    //   dataList[index] = { ...dataList[index], ...data };
-    //   setDataList([...dataList]);
-    //   alert("tarea actualizada correctamente");
-    // }
-    // else alert(`La tarea con el ID ${id} no existe`);
+  const handleTaskEdit = (id, editField) => {
+    const index = dataList.findIndex((list) => list.id == id);
+    if (index >= 0) {
+      dataList[index] = { ...dataList[index], ...editField };
+      setDataList([...dataList]);
+      alert("tarea actualizada correctamente");
+    } else alert(`La tarea con el ID ${id} no existe`);
   };
   return [
     handleButtonAdd,
