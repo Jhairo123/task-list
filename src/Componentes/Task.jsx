@@ -2,36 +2,14 @@
 import { useContext, useState } from "react";
 import { MyContext } from "../createContext";
 
-export default function Task({ id, title, description }) {
+export default function Task({ id, title, description, state }) {
   const [isVisible, setIsVisible] = useState(true);
   const [editField, setEditField] = useState({
-    title: "",
-    description: "",
+    title: title,
+    description: description,
   });
-  const { handleTaskEdit, handleTaskDelete, handleCheckboxChange, isChecked } =
+  const { handleTaskEdit, handleTaskDelete, handleCheckboxChange } =
     useContext(MyContext);
-
-  // const [isChecked, setIsChecked] = useState(
-  //   localStorage.getItem("isCheckedValue")
-  // );
-
-  // useEffect(() => {
-  //   const savedIsCheckedValue = localStorage.getItem("isCheckedValue");
-  //   if (savedIsCheckedValue) {
-  //     setIsChecked(savedIsCheckedValue);
-  //     // console.log(savedIsCheckedValue);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem("isCheckedValue", isChecked); // Guarda inputValue
-  // }, [isChecked]);
-  // //Agrega esta funcion handleCheckboxChange al hook personalizado
-  // const handleCheckboxChange = (event) => {
-  //   setIsChecked(event.target.checked);
-  //   // localStorage.setItem("isCheckedValue", isChecked);
-  //   // console.log(isChecked);
-  // };
 
   const handleToggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -80,8 +58,8 @@ export default function Task({ id, title, description }) {
           id="checkbox1"
           type="checkbox"
           className="opcion1"
-          checked={JSON.parse(isChecked)}
-          onChange={(e) => handleCheckboxChange(e)}
+          checked={state}
+          onChange={(e) => handleCheckboxChange(id, e)}
         />
         {/* Label tarea */}
         <label className="label">{title}</label>

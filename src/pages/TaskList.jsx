@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 import Task from "../Componentes/Task.jsx";
 import { useContext, useEffect, useState } from "react";
-import { useTask } from "../customHook.js";
 import { MyContext } from "../createContext.js";
 
 export default function TaskList() {
-  const [enableButton, setEnableButton] = useState(false);
   const {
     handleButtonAdd,
     handleButtonDelete,
@@ -22,28 +20,6 @@ export default function TaskList() {
     textArea: "",
   });
 
-  // const handleButtonDelete = () => {
-  //   if (dataList.length == 0) alert("No hay ninguna tarea");
-  //   else {
-  //     alert("las tareas han sido borradas satisfactoriamente");
-  //     setDataList([]);
-  //     // localStorage.clear();
-  //   }
-  // };
-
-  // const handleButtonAdd = () => {
-  //   if (inputValue.length > 3) {
-  //     const newData = {
-  //       titulo: inputValue,
-  //       descripcion: textAreaValue,
-  //       estado: false,
-  //     };
-  //     setDataList([...dataList, newData]);
-  //     setInputValue("");
-  //     setTextAreaValue("");
-  //     alert("Se ha añadido la tarea a la lista satisfactoriamente");
-  //   } else alert("No se pudo crear, la tarea es muy corta");
-  // };
   //Esta variable permite que el use effect se ejecute una sola vez
   let effectIsOn = false;
   useEffect(() => {
@@ -61,7 +37,7 @@ export default function TaskList() {
     if (savedDataList) {
       if (effectIsOn == false) {
         effectIsOn = true;
-        console.log(effectIsOn);
+        // console.log(effectIsOn);
         setDataList(savedDataList);
       }
     }
@@ -111,6 +87,17 @@ export default function TaskList() {
   //   e.preventDefault();
   //   registerUser(field);
   // };
+  const showPendingTaks = () => {
+    let count = 0;
+
+    for (const task of dataList) {
+      if (task.state === false) {
+        count++;
+      }
+    }
+
+    return count;
+  };
 
   return (
     <>
@@ -165,6 +152,7 @@ export default function TaskList() {
               key={arrayTarea.id}
               id={arrayTarea.id}
               title={arrayTarea.title}
+              state={arrayTarea.state}
               description={arrayTarea.description}
             />
           ))}
@@ -186,7 +174,7 @@ export default function TaskList() {
               marginBottom: "15px",
             }}
           >
-            Tienes {dataList.length} tarea(s) pendientes
+            Tienes {showPendingTaks()} tarea(s) pendientes
           </p>
           <button
             style={{

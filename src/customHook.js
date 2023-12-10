@@ -22,8 +22,13 @@ export const useTask = () => {
     localStorage.setItem("isCheckedValue", isChecked); // Guarda inputValue
   }, [isChecked]);
 
-  const handleCheckboxChange = (event) => {
-    setIsChecked(event.target.checked);
+  const handleCheckboxChange = (id, event) => {
+    const index = dataList.findIndex((dataList) => dataList.id == id);
+    if (index >= 0) {
+      dataList[index].state = event.target.checked;
+      let newList = [...dataList];
+      setDataList(newList);
+    }
 
     // localStorage.setItem("isCheckedValue", isChecked);
     // console.log(isChecked);
@@ -37,7 +42,7 @@ export const useTask = () => {
         id: uuidv4(),
         title: inputValue,
         description: textAreaValue,
-        estado: false,
+        state: false,
       };
       setDataList([...dataList, newData]);
       setInputValue("");
@@ -58,8 +63,18 @@ export const useTask = () => {
   };
 
   const handleTaskDelete = (id) => {
-    setDataList(dataList.filter((list) => list.id != id));
-    alert("La tarea sera eliminada con exito");
+    const accepted = window.confirm(
+      "¿Está seguro que desea eliminar esta tarea?"
+    );
+
+    if (accepted) {
+      // Código a ejecutar si el usuario hace clic en "Aceptar"
+      alert("La tarea sera eliminada con exito");
+      setDataList(dataList.filter((list) => list.id != id));
+    } else {
+      // Código a ejecutar si el usuario hace clic en "Cancelar"
+      alert("Operación cancelada");
+    }
   };
 
   const handleTaskEdit = (id, editField) => {
