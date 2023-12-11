@@ -2,6 +2,7 @@
 import Task from "../Componentes/Task.jsx";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../createContext.js";
+import Header from "../Componentes/Header.jsx";
 
 export default function TaskList() {
   const {
@@ -101,6 +102,7 @@ export default function TaskList() {
 
   return (
     <>
+      <Header />
       <div className="contenedorTaskList1">
         <form onSubmit={handleButtonAdd}>
           <div

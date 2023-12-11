@@ -1,4 +1,4 @@
-export function HomePage() {
+export default function HomePage() {
   return (
     <>
       <h1>Lista de tareas</h1>

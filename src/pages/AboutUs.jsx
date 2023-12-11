@@ -1,4 +1,4 @@
-export function AboutUs() {
+export default function AboutUs() {
   return (
     <>
       <p>
