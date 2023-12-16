@@ -47,7 +47,9 @@ export const useTask = () => {
       setDataList([...dataList, newData]);
       setInputValue("");
       setTextAreaValue("");
-      alert("Se ha añadido la tarea a la lista satisfactoriamente");
+      setTimeout(() => {
+        alert("Se ha añadido la tarea a la lista satisfactoriamente");
+      }, 100);
       // if (index >= 1) dataList[index].id = dataList[index - 1].id + 1;
       // else dataList[index].id = ++index;
     } else alert("No se pudo crear, la tarea es muy corta");
@@ -56,9 +58,19 @@ export const useTask = () => {
   const handleButtonDelete = () => {
     if (dataList.length == 0) alert("No hay ninguna tarea");
     else {
-      alert("las tareas han sido borradas satisfactoriamente");
-      setDataList([]);
-      // localStorage.clear();
+      const accepted = window.confirm(
+        "¿Está seguro que desea eliminar todas las tareas?"
+      );
+      if (accepted) {
+        // Código a ejecutar si el usuario hace clic en "Aceptar"
+        setDataList([]);
+        setTimeout(() => {
+          alert("Las tareas han sido borradas satisfactoriamente");
+        }, 100);
+      } else {
+        // Código a ejecutar si el usuario hace clic en "Cancelar"
+        alert("Operación cancelada");
+      }
     }
   };
 
@@ -69,8 +81,10 @@ export const useTask = () => {
 
     if (accepted) {
       // Código a ejecutar si el usuario hace clic en "Aceptar"
-      alert("La tarea sera eliminada con exito");
       setDataList(dataList.filter((list) => list.id != id));
+      setTimeout(() => {
+        alert("La tarea ha sido eliminada con exito");
+      }, 100);
     } else {
       // Código a ejecutar si el usuario hace clic en "Cancelar"
       alert("Operación cancelada");
