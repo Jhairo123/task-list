@@ -6,8 +6,9 @@ import { useTask } from "./customHook";
 // import TaskList from "./pages/TaskList";
 // import HomePage from "./pages/HomePage";
 // import AboutUs from "./pages/AboutUs";
-import { Menu } from "./Componentes/Menu";
+
 import Loading from "./pages/Loading";
+import Header from "./Components/Header";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const TaskList = lazy(() => import("./pages/TaskList"));
@@ -17,7 +18,7 @@ const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 export function AppRouter() {
   return (
     <>
-      <Menu />
+      <Header />
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/Home" element={<HomePage />} />
