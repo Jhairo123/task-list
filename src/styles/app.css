@@ -1,55 +1,90 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 3rem;
+  padding-top: 4rem;
   text-align: center;
 }
 
-.contenedorTaskList1 {
+
+.container-wrapped-all {
+  border: 1px solid rgba(255, 255, 255, 0);
   display: inline-grid;
-  box-shadow: 2px 2px 5px rgb(85, 85, 85);
+  box-shadow:
+    /* Sombra en el borde superior */
+    0px -5px 5px -5px rgba(85, 85, 85),
+    /* Sombra en el borde inferior */
+    0px 5px 5px -5px rgba(85, 85, 85);
   padding: 10px;
   grid-column-start: 1;
   grid-row-end: 4;
-  grid-template-columns: 17rem;
-
+  grid-template-columns: 15rem;
   column-gap: 0.5rem;
   row-gap: 0.5rem;
 }
 
-.contenedorTaskList2 {
+.content-center {
+  border: 3px solid;
   display: grid;
   border: 1px solid rgba(255, 255, 255, 0);
-  padding: 10px;
+  padding-left: 15px;
+  padding-right: 10px;
+  padding-bottom: 10px;
   box-shadow:
-    0px -5px 5px -5px rgba(85, 85, 85),
     /* Sombra en el borde superior */
+    0px -5px 5px -5px rgba(85, 85, 85),
+    /* Sombra en el borde inferior */
     0px 5px 5px -5px rgba(85, 85, 85);
-  /* Sombra en el borde inferior */
   /* box-shadow: 0px 0px 0.5px 0.5px rgb(85, 85, 85); */
   align-items: stretch;
   grid-column: 1 / span 2;
+  /* Separacion entre contenedores */
+  row-gap: 0.6rem;
 
-  row-gap: 0.5rem;
-
-  height: 12.5rem;
+  height: 15.5rem;
   overflow: auto;
-
 }
 
-.grid-item-a {
+.content-north {
+  display: inline-grid;
+  grid-column: 1 / span 2;
+  padding: 10px;
+  grid-column-start: 1;
+  grid-row-end: 1;
+  grid-template-columns: 17rem;
+  column-gap: 0.5rem;
+  row-gap: 0.5rem;
+}
+
+.content-north-input-text {
   grid-column-start: 1;
   grid-row-start: 1;
   border-radius: 10px
 }
 
-.grid-item-b {
+.button-add {
+
+  color: #4c84af;
+
   grid-column-start: 2;
   grid-row-start: 1;
-  border-radius: 10px;
+
+  /* color: #000;
+ 
+  /* Fondo blanco */
+  border: 2px solid;
+  /* Borde de 2px sólido verde */
+
+  background: rgba(0, 193, 32, 0.685);
+  /* Fondo verde traslúcido al pasar el ratón */
+  color: white;
+
 }
 
+.button-add:hover {
 
+  color: white;
+  border: 2px solid #02ff2c;
+  transition: all 0.4s ease;
+}
 
 .label {
   text-decoration: none;
@@ -62,19 +97,147 @@ input[type="checkbox"]:checked+.label {
 }
 
 .imagen {
+  margin-top: 5px;
   cursor: pointer;
   width: 2rem;
   height: 2rem;
 }
 
-span.error {
-  display: block;
-  color: red;
+.span-label {
+  /* align-items: initial; */
   font-style: italic;
   font-size: 0.8rem;
-  margin-top: 0.2rem;
+  text-align: left;
+  margin-left: 5px;
 }
 
+#span-label-alert {
+  color: green;
+  margin-top: -0.5rem;
+}
+
+#span-label-error {
+  color: red;
+  margin-top: -0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.form {
+  display: inline;
+}
+
+.input {
+  margin-bottom: 9px;
+  width: 12.5rem;
+}
+
+#input-text {
+  margin-top: 20px;
+  height: 1rem;
+}
+
+#input-textarea {
+  height: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.button-save-edit {
+  margin-left: 5px;
+  background-color: white;
+  color: #4c84af;
+  border: 2px solid #4c84af;
+}
+
+.button-save-edit:hover {
+  margin-left: 7px;
+  background-color: #4c84af;
+  color: white;
+  border: 2px solid #4c84af;
+  transition: all 0.4s ease;
+}
+
+.button-cancel-edit {
+  /* margin-bottom: 10px; */
+  margin-right: 5px;
+  color: #4c84af !important;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid #4c84af;
+  transition: all 0.4s ease;
+}
+
+.button-cancel-edit:hover {
+  margin-right: 7px;
+  background: #f74d4d;
+  color: #fff !important;
+  border-color: #f74d4d;
+}
+
+.content-south {
+  display: grid;
+  padding: 10px;
+  grid-column: 1 / span 2;
+}
+
+.p-label {
+  display: inline;
+  font-style: italic;
+  font-size: 1rem;
+
+}
+
+#completed-task {
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: green;
+}
+
+#pending-task {
+  margin-bottom: 10px;
+  color: red;
+  margin-top: -10px;
+}
+
+.content-tasks {
+  display: inline-block;
+  width: 19.5rem;
+  overflow: auto;
+  background-color: whitesmoke;
+  border-radius: 1rem;
+}
+
+#content-task {
+  height: 6rem;
+}
+
+#content-edit-task {
+  height: 9.5rem;
+}
+
+.button-delete-all {
+  display: inline-grid;
+  grid-template-columns: 18rem;
+  background-color: #fd4242;
+  border: 2px solid;
+  color: white;
+}
+
+.content-show {
+  display: block;
+}
+
+.content-hiden {
+  display: none;
+}
+
+.button-delete-all:hover {
+  transition: all 0.4s ease;
+  background-color: red;
+  color: white;
+  border: 2px solid red;
+}
+
+
+/* AboutUs */
 .container {
   max-width: 600vp;
   margin: 0 auto;
@@ -94,4 +257,10 @@ blockquote {
 
 blockquote p {
   margin: 0;
+}
+
+@media only screen and (min-width:320px) and (max-width:768px) {
+  .header {
+    height: 60px;
+  }
 }
