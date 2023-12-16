@@ -120,7 +120,6 @@ export default function TaskList() {
             <span className="span-label" id="span-label-error">
               {error.inputText}
             </span>
-            <label></label>
             <textarea
               name="textArea"
               rows="4"
@@ -129,7 +128,7 @@ export default function TaskList() {
               value={textAreaValue}
               onChange={handleTextareaChange}
             ></textarea>
-            <button className="button-add" id="agregarTarea">
+            <button className="button-add">
               +
             </button>
             <label></label>
