@@ -1,8 +1,20 @@
 export default function HomePage() {
   return (
     <>
-      <h1>Lista de tareas</h1>
-      <div style={{ textAlign: "justify", textJustify: "inter-word" }}>
+      <h1
+        style={{
+          marginBottom: "-50px",
+        }}
+      >
+        Lista de tareas
+      </h1>
+      <div
+        style={{
+          padding: "60px",
+          textAlign: "justify",
+          textJustify: "inter-word",
+        }}
+      >
         <h2>¿Qué es mi producto y para que sirve?</h2>
         <p>
           Mi producto es una aplicación de lista de tareas ✅.

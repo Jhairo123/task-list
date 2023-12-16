@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
-import Task from "../Componentes/Task.jsx";
+import Task from "../Components/Task.jsx";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../createContext.js";
-import Header from "../Componentes/Header.jsx";
 
 export default function TaskList() {
   const {
@@ -84,16 +83,21 @@ export default function TaskList() {
     // localStorage.setItem("textAreaValue", value);
   };
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   registerUser(field);
-  // };
-  const showPendingTaks = () => {
+  const handleButton = (e) => {
+    e.preventDefault();
+    handleButtonAdd();
+  };
+  const showLabelTasks = (state) => {
     let count = 0;
-
     for (const task of dataList) {
-      if (task.state === false) {
-        count++;
+      if (!state) {
+        if (task.state === false) {
+          count++;
+        }
+      } else {
+        if (task.state === true) {
+          count++;
+        }
       }
     }
 
@@ -102,32 +106,18 @@ export default function TaskList() {
 
   return (
     <>
-      <Header />
-      <div className="contenedorTaskList1">
-        <form onSubmit={handleButtonAdd}>
-          <div
-            style={{
-              display: "inline-grid",
-              gridColumn: "1 / span 2",
-              // boxShadow: "0.5px 0.5px 4px rgb(   </form>85, 85, 85)",
-              padding: "10px",
-              gridColumnStart: "1",
-              gridRowEnd: "1",
-              gridTemplateColumns: "17rem",
-              columnGap: "0.5rem",
-              rowGap: "0.5rem",
-            }}
-          >
+      <div className="container-wrapped-all">
+        <form onSubmit={handleButton}>
+          <div className="content-north">
             <input
-              className="grid-item-a"
+              className="content-north-input-text"
               type="text"
               name="inputText"
               value={inputValue}
-              id="nuevaTarea"
               placeholder="Agregar nueva tarea"
               onChange={handleInputChange}
             />
-            <span className="error" role="alert">
+            <span className="span-label" id="span-label-error">
               {error.inputText}
             </span>
             <label></label>
@@ -139,16 +129,22 @@ export default function TaskList() {
               value={textAreaValue}
               onChange={handleTextareaChange}
             ></textarea>
-            <button className="grid-item-b" id="agregarTarea">
-              {"+"}
+            <button className="button-add" id="agregarTarea">
+              +
             </button>
             <label></label>
-            <span className="error" role="alert">
+            <span className="span-label" id="span-label-alert">
               {error.textArea}
             </span>
           </div>
         </form>
-        <div className="contenedorTaskList2">
+        <div className="content-center">
+          <p className="p-label" id="completed-task">
+            Tienes {showLabelTasks(true)}{" "}
+            {showLabelTasks(true) == 1
+              ? "tarea completada"
+              : "tareas completadas"}
+          </p>
           {dataList.map((arrayTarea) => (
             <Task
               key={arrayTarea.id}
@@ -159,35 +155,15 @@ export default function TaskList() {
             />
           ))}
         </div>
-        <div
-          style={{
-            display: "grid",
-
-            padding: "10px",
-            gridColumn: "1 / span 2",
-
-            // width: "20rem",
-            // boxShadow: "2px 2px 5px rgb(85, 85, 85)",
-          }}
-        >
-          <p
-            style={{
-              marginTop: "0px" /* Margen superior de 20px */,
-              marginBottom: "15px",
-            }}
-          >
-            Tienes {showPendingTaks()} tarea(s) pendientes
+        <div className="content-south">
+          <p className="p-label" id="pending-task">
+            Tienes {showLabelTasks(false)}{" "}
+            {showLabelTasks(false) == 1
+              ? "tarea pendiente"
+              : "tareas pendientes"}
           </p>
-          <button
-            style={{
-              display: "inline-grid",
-              gridTemplateColumns: "18rem",
-              backgroundColor: "red",
-              color: "white",
-            }}
-            id="agregarTar"
-            onClick={handleButtonDelete}
-          >
+
+          <button className="button-delete-all" onClick={handleButtonDelete}>
             {"Eliminar todo"}
           </button>
         </div>
