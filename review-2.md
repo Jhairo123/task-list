@@ -1,11 +1,13 @@
-
-## Si lo deseas pues ver una descripcion detallada de este projecto, a continuacion:
-[![Alt text](https://img.youtube.com/vi/ddgT8AQHCLw/0.jpg)](https://www.youtube.com/watch?v=3ddgT8AQHCLw)
-
 ## ¿Qué es mi producto y para que sirve?
 
 **_Mi producto es una aplicación_** de **_lista de tareas_** :white_check_mark:.<br>
 Se ha diseñado para ayudar a los usuarios a **_administrar y organizar_** sus **_actividades diarias, proyectos y responsabilidades_** de manera **_eficiente y sin complicaciones._** Con mi aplicación, los usuarios pueden **_crear, editar, eliminar y visualizar sus tareas en una lista_**. Permitiéndoles mantenerse **_enfocados en sus objetivos y tareas pendientes_**.
+
+
+### Ver video, a continuacion: :point_down::point_down::point_down: <br />
+[![Alt text](https://img.youtube.com/vi/ddgT8AQHCLw/0.jpg)](https://www.youtube.com/watch?v=3ddgT8AQHCLw)
+> [!TIP]
+>  En este video podras ver el projecto y sus funcionalidades, de esta forma los clientes entenderan como usar mi aplicacion.
 
 ## ¿Cuáles son las funcionalidades más importantes y porque los usuarios las usarían?
 
