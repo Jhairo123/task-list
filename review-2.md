@@ -1,4 +1,7 @@
 
+## Si lo deseas pues ver una descripcion detallada de este projecto, a continuacion:
+[![Alt text](https://img.youtube.com/vi/ddgT8AQHCLw/0.jpg)](https://www.youtube.com/watch?v=3ddgT8AQHCLw)
+
 ## ¿Qué es mi producto y para que sirve?
 
 **_Mi producto es una aplicación_** de **_lista de tareas_** :white_check_mark:.<br>
