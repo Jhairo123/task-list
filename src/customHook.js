@@ -33,26 +33,20 @@ export const useTask = () => {
     // localStorage.setItem("isCheckedValue", isChecked);
     // console.log(isChecked);
   };
-  const handleButtonAdd = () => {
-    if (inputValue.length > 3) {
-      // let index = dataList.length;
+  const handleButtonAdd = ({ title, description }) => {
+    const newData = {
+      // id: index,
+      id: uuidv4(),
+      title: title,
+      description: description,
+      state: false,
+    };
+    setDataList([...dataList, newData]);
 
-      const newData = {
-        // id: index,
-        id: uuidv4(),
-        title: inputValue,
-        description: textAreaValue,
-        state: false,
-      };
-      setDataList([...dataList, newData]);
-      setInputValue("");
-      setTextAreaValue("");
-      setTimeout(() => {
-        alert("Se ha añadido la tarea a la lista satisfactoriamente");
-      }, 100);
-      // if (index >= 1) dataList[index].id = dataList[index - 1].id + 1;
-      // else dataList[index].id = ++index;
-    } else alert("No se pudo crear, la tarea es muy corta");
+    // alert("Se ha añadido la tarea a la lista satisfactoriamente");
+
+    // if (index >= 1) dataList[index].id = dataList[index - 1].id + 1;
+    // else dataList[index].id = ++index;
   };
 
   const handleButtonDelete = () => {

@@ -2,8 +2,26 @@
 import Task from "../Components/Task.jsx";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../createContext.js";
+import { useForm } from "react-hook-form";
+
+import {
+  Center,
+  Box,
+  Button,
+  Input,
+  StackDivider,
+  Textarea,
+  VStack,
+  Text,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  useToast,
+} from "@chakra-ui/react";
 
 export default function TaskList() {
+  const toast = useToast();
   const {
     handleButtonAdd,
     handleButtonDelete,
@@ -18,6 +36,21 @@ export default function TaskList() {
   const [error, setError] = useState({
     inputText: "",
     textArea: "",
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    // delayError: 1000,
+    defaultValues: {
+      title: inputValue,
+      description: textAreaValue,
+    },
   });
 
   //Esta variable permite que el use effect se ejecute una sola vez
@@ -84,9 +117,21 @@ export default function TaskList() {
   };
 
   const handleButton = (e) => {
-    e.preventDefault();
-    handleButtonAdd();
+    // e.preventDefault();
+    handleButtonAdd(e);
+    toast({
+      position: "top",
+      title: "Tarea añadida en la lista",
+      description: "Su tarea ha sido enviada satisfactoriamente.",
+      status: "success",
+      duration: 5000,
+      // variant: "variant",
+      isClosable: true,
+    });
+
+    reset();
   };
+
   const showLabelTasks = (state) => {
     let count = 0;
     for (const task of dataList) {
@@ -106,7 +151,130 @@ export default function TaskList() {
 
   return (
     <>
-      <div className="container-wrapped-all">
+      <Center>
+        <VStack
+          border="1px solid rgba(255, 255, 255, 0)"
+          display="grid"
+          boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
+          divider={<StackDivider borderColor="gray.200" />}
+          spacing={4}
+          align="stretch"
+        >
+          <Box padding="10px" gridTemplateColumns="17rem" rowGap="0.5rem">
+            <form onSubmit={handleSubmit(handleButton)}>
+              {/* inputText */}
+              <FormControl
+                // isRequired
+                id="text"
+                isInvalid={errors.title}
+                // onChange={handleInputChange}
+              >
+                <FormLabel>Agregar nueva tarea</FormLabel>
+                <Input
+                  placeholder="Agregar nueva tarea"
+                  {...register("title", {
+                    required: "Este campo es requerido",
+                    minLength: {
+                      value: 3,
+                      message: "La longitud minima es de 3 caracteres",
+                    },
+                  })}
+                />
+                <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="area">
+                <FormLabel textAlign="left">Agregar una descripcion</FormLabel>
+
+                <Textarea
+                  placeholder="Añade una descripción..."
+                  {...register("description", {
+                    required: false,
+                  })}
+                />
+                <FormHelperText>La descripcion es opcional</FormHelperText>
+              </FormControl>
+              {/* <Input
+              className="content-north-input-text"
+              type="text"
+              name="inputText"
+              value={inputValue}
+              placeholder="Agregar nueva tarea"
+              onChange={handleInputChange}
+            />
+            <span className="span-label" id="span-label-error">
+              {error.inputText}
+            </span>
+            <label></label>
+            <Textarea
+              name="textArea"
+              rows="4"
+              cols="50"
+              placeholder="Añade una descripción..."
+              value={textAreaValue}
+              onChange={handleTextareaChange}
+            ></Textarea> */}
+              <Button
+                mt={1}
+                mb={2}
+                paddingX={170}
+                colorScheme="teal"
+                isLoading={isSubmitting}
+                type="submit"
+              >
+                +
+              </Button>
+            </form>
+            <Text
+              display="inline"
+              fontStyle="italic"
+              fontSize="1rem"
+              marginTop="5px"
+              marginBottom="0"
+              color="green"
+            >
+              Tienes {showLabelTasks(true)}{" "}
+              {showLabelTasks(true) == 1
+                ? "tarea completada"
+                : "tareas completadas"}
+            </Text>
+          </Box>
+
+          <Box
+            border="3px solid"
+            display="grid"
+            borderColor="rgba(255, 255, 255, 0)"
+            paddingLeft="15px"
+            paddingRight="10px"
+            paddingBottom="10px"
+            boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
+            alignItems="stretch"
+            rowGap="0.6rem"
+            height="15.5rem"
+            overflow="auto"
+          >
+            {dataList.map((arrayTarea) => (
+              <Task
+                key={arrayTarea.id}
+                id={arrayTarea.id}
+                title={arrayTarea.title}
+                state={arrayTarea.state}
+                description={arrayTarea.description}
+              />
+            ))}
+          </Box>
+          <Box display="grid" padding="10px" gridColumn="1 / span 2">
+            <p className="p-label" id="pending-task">
+              Tienes {showLabelTasks(false)}{" "}
+              {showLabelTasks(false) == 1
+                ? "tarea pendiente"
+                : "tareas pendientes"}
+            </p>
+
+            <Button onClick={handleButtonDelete}>{"Eliminar todo"}</Button>
+          </Box>
+        </VStack>
+      </Center>
+      {/* <div className="container-wrapped-all">
         <form onSubmit={handleButton}>
           <div className="content-north">
             <input
@@ -167,7 +335,7 @@ export default function TaskList() {
             {"Eliminar todo"}
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
