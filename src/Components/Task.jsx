@@ -88,12 +88,12 @@ export default function Task({ id, title, description, state }) {
               alignItems="center"
               border="1px solid"
             >
-              <Switch size="lg" />
-              {/* <input
+              {/* <Switch size="lg" /> */}
+              <input
                 type="checkbox"
                 checked={state}
                 onChange={(e) => handleCheckboxChange(id, e)}
-              /> */}
+              />
             </Box>
             <Box
               gridColumnStart="2"
