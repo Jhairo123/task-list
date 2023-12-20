@@ -3,6 +3,8 @@ import Task from "../Components/Task.jsx";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../createContext.js";
 import { useForm } from "react-hook-form";
+import { AddIcon, WarningIcon, DeleteIcon } from "@chakra-ui/icons";
+import { Switch } from "@chakra-ui/react";
 
 import {
   Center,
@@ -153,12 +155,14 @@ export default function TaskList() {
     <>
       <Center>
         <VStack
-          border="1px solid rgba(255, 255, 255, 0)"
+          mt={3}
+          width={400}
+          // border="1px solid rgba(255, 255, 255, 0)"
           display="grid"
-          boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
+          // boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
           divider={<StackDivider borderColor="gray.200" />}
           spacing={4}
-          align="stretch"
+          // align="stretch"
         >
           <Box padding="10px" gridTemplateColumns="17rem" rowGap="0.5rem">
             <form onSubmit={handleSubmit(handleButton)}>
@@ -214,22 +218,19 @@ export default function TaskList() {
               onChange={handleTextareaChange}
             ></Textarea> */}
               <Button
-                mt={1}
+                mt={2}
                 mb={2}
-                paddingX={170}
+                width="100%"
                 colorScheme="teal"
                 isLoading={isSubmitting}
                 type="submit"
-              >
-                +
-              </Button>
+                leftIcon={<AddIcon />}
+              ></Button>
             </form>
             <Text
               display="inline"
               fontStyle="italic"
               fontSize="1rem"
-              marginTop="5px"
-              marginBottom="0"
               color="green"
             >
               Tienes {showLabelTasks(true)}{" "}
@@ -240,16 +241,16 @@ export default function TaskList() {
           </Box>
 
           <Box
-            border="3px solid"
+            // border="3px solid"
             display="grid"
             borderColor="rgba(255, 255, 255, 0)"
-            paddingLeft="15px"
-            paddingRight="10px"
-            paddingBottom="10px"
+            // paddingLeft={5}
+            paddingTop={2}
+            paddingBottom={2}
+            // paddingRight={10}
             boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
-            alignItems="stretch"
-            rowGap="0.6rem"
-            height="15.5rem"
+            rowGap={2}
+            height={215}
             overflow="auto"
           >
             {dataList.map((arrayTarea) => (
@@ -263,14 +264,32 @@ export default function TaskList() {
             ))}
           </Box>
           <Box display="grid" padding="10px" gridColumn="1 / span 2">
-            <p className="p-label" id="pending-task">
+            <Text
+              display="inline"
+              fontStyle="italic"
+              fontSize="1rem"
+              color="red"
+              marginBottom={3}
+            >
               Tienes {showLabelTasks(false)}{" "}
               {showLabelTasks(false) == 1
                 ? "tarea pendiente"
                 : "tareas pendientes"}
-            </p>
+            </Text>
 
-            <Button onClick={handleButtonDelete}>{"Eliminar todo"}</Button>
+            <Button
+              leftIcon={<DeleteIcon />}
+              border="2px"
+              borderColor="red.500"
+              variant="outline"
+              // marginTop={10}
+              // backgroundColor="#fd4242"
+              // border="2px solid"
+              color="white"
+              onClick={handleButtonDelete}
+            >
+              {"Eliminar todo"}
+            </Button>
           </Box>
         </VStack>
       </Center>
