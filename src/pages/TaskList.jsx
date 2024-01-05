@@ -4,8 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../createContext.js";
 import { useForm } from "react-hook-form";
 import { AddIcon, WarningIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Switch } from "@chakra-ui/react";
-
+import React from "react";
 import {
   Center,
   Box,
@@ -20,9 +19,20 @@ import {
   FormErrorMessage,
   FormHelperText,
   useToast,
+  Grid,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 export default function TaskList() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
   const toast = useToast();
   const {
     handleButtonAdd,
@@ -122,7 +132,7 @@ export default function TaskList() {
     // e.preventDefault();
     handleButtonAdd(e);
     toast({
-      position: "top",
+      position: "top-right",
       title: "Tarea añadida en la lista",
       description: "Su tarea ha sido enviada satisfactoriamente.",
       status: "success",
@@ -150,21 +160,25 @@ export default function TaskList() {
 
     return count;
   };
+  const handleSendButtonDelete = () => {
+    handleButtonDelete();
+  };
 
   return (
     <>
       <Center>
-        <VStack
-          mt={3}
+        <Box
+          m={5}
           width={400}
+          // height="100vw"
           // border="1px solid rgba(255, 255, 255, 0)"
-          display="grid"
+          display="inline"
           // boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
-          divider={<StackDivider borderColor="gray.200" />}
-          spacing={4}
+          // divider={<StackDivider borderColor="gray.200" />}
+          // spacing={4}
           // align="stretch"
         >
-          <Box padding="10px" gridTemplateColumns="17rem" rowGap="0.5rem">
+          <Box gridTemplateColumns="17rem" rowGap="0.5rem">
             <form onSubmit={handleSubmit(handleButton)}>
               {/* inputText */}
               <FormControl
@@ -175,6 +189,7 @@ export default function TaskList() {
               >
                 <FormLabel>Agregar nueva tarea</FormLabel>
                 <Input
+                  mb={errors.title ? "0px" : "10px"}
                   placeholder="Agregar nueva tarea"
                   {...register("title", {
                     required: "Este campo es requerido",
@@ -184,7 +199,9 @@ export default function TaskList() {
                     },
                   })}
                 />
-                <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+                <FormErrorMessage m={0}>
+                  {errors.title?.message}
+                </FormErrorMessage>
               </FormControl>
               <FormControl id="area">
                 <FormLabel textAlign="left">Agregar una descripcion</FormLabel>
@@ -219,7 +236,7 @@ export default function TaskList() {
             ></Textarea> */}
               <Button
                 mt={2}
-                mb={2}
+                // mb={2}
                 width="100%"
                 colorScheme="teal"
                 isLoading={isSubmitting}
@@ -228,7 +245,8 @@ export default function TaskList() {
               ></Button>
             </form>
             <Text
-              display="inline"
+              mt={2}
+              // display="inline"
               fontStyle="italic"
               fontSize="1rem"
               color="green"
@@ -239,18 +257,21 @@ export default function TaskList() {
                 : "tareas completadas"}
             </Text>
           </Box>
-
-          <Box
+          {/* grid-content-center */}
+          <Grid
+            my={2}
             // border="3px solid"
-            display="grid"
             borderColor="rgba(255, 255, 255, 0)"
             // paddingLeft={5}
             paddingTop={2}
             paddingBottom={2}
-            // paddingRight={10}
+            paddingRight={1}
+            // Sombras en los bordes
             boxShadow="0px -5px 5px -5px rgba(85, 85, 85), 0px 5px 5px -5px rgba(85, 85, 85)"
+            // Separacion entre celdas
             rowGap={2}
             height={215}
+            // Barra de desplazamiento si el contenido lo requiere
             overflow="auto"
           >
             {dataList.map((arrayTarea) => (
@@ -262,14 +283,19 @@ export default function TaskList() {
                 description={arrayTarea.description}
               />
             ))}
-          </Box>
-          <Box display="grid" padding="10px" gridColumn="1 / span 2">
+          </Grid>
+          {/* grid-content-south */}
+          <Grid
+          // border="1px solid"
+          // padding="3px 0px"
+          >
             <Text
-              display="inline"
+              mb={2}
+              // display="inline"
               fontStyle="italic"
               fontSize="1rem"
               color="red"
-              marginBottom={3}
+              // marginBottom={3}
             >
               Tienes {showLabelTasks(false)}{" "}
               {showLabelTasks(false) == 1
@@ -278,6 +304,7 @@ export default function TaskList() {
             </Text>
 
             <Button
+              // mt="10px"
               leftIcon={<DeleteIcon />}
               border="2px"
               borderColor="red.500"
@@ -285,14 +312,59 @@ export default function TaskList() {
               // marginTop={10}
               // backgroundColor="#fd4242"
               // border="2px solid"
-              color="white"
-              onClick={handleButtonDelete}
+
+              onClick={onOpen}
             >
-              {"Eliminar todo"}
+              Eliminar todo
             </Button>
-          </Box>
-        </VStack>
+          </Grid>
+        </Box>
       </Center>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Mensaje de confirmacion
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              ¿Está seguro que desea eliminar todas las tareas?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                ref={cancelRef}
+                onClick={() => {
+                  onClose();
+                  toast({
+                    title: "Operación cancelada",
+                    status: "info",
+                    variant: "subtle",
+                    position: "top-right",
+                    isClosable: true,
+                  });
+                }}
+              >
+                Cancelar
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  onClose(); // Llama a onOpen
+                  handleSendButtonDelete(); // Llama a handleSendButtonDelete
+                }}
+                ml={3}
+              >
+                Aceptar
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       {/* <div className="container-wrapped-all">
         <form onSubmit={handleButton}>
           <div className="content-north">

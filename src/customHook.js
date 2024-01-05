@@ -10,13 +10,13 @@ export const useTask = () => {
     localStorage.getItem("isCheckedValue")
   );
 
-  useEffect(() => {
-    const savedIsCheckedValue = localStorage.getItem("isCheckedValue");
-    if (savedIsCheckedValue) {
-      setIsChecked(savedIsCheckedValue);
-      // console.log(savedIsCheckedValue);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedIsCheckedValue = localStorage.getItem("isCheckedValue");
+  //   if (savedIsCheckedValue) {
+  //     setIsChecked(savedIsCheckedValue);
+  //     console.log(savedIsCheckedValue);
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem("isCheckedValue", isChecked); // Guarda inputValue
@@ -50,22 +50,7 @@ export const useTask = () => {
   };
 
   const handleButtonDelete = () => {
-    if (dataList.length == 0) alert("No hay ninguna tarea");
-    else {
-      const accepted = window.confirm(
-        "¿Está seguro que desea eliminar todas las tareas?"
-      );
-      if (accepted) {
-        // Código a ejecutar si el usuario hace clic en "Aceptar"
-        setDataList([]);
-        setTimeout(() => {
-          alert("Las tareas han sido borradas satisfactoriamente");
-        }, 100);
-      } else {
-        // Código a ejecutar si el usuario hace clic en "Cancelar"
-        alert("Operación cancelada");
-      }
-    }
+    setDataList([]);
   };
 
   const handleTaskDelete = (id) => {
