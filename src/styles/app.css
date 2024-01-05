@@ -1,7 +1,8 @@
 #root {
-  margin: 0 auto;
-  padding-top: 4rem;
+  margin: auto;
+  padding-top: 90px;
   text-align: center;
+  height: 100vh;
 }
 
 
@@ -169,12 +170,7 @@ input[type="checkbox"]:checked+.label {
   grid-column: 1 / span 2;
 }
 
-.p-label {
-  display: inline;
-  font-style: italic;
-  font-size: 1rem;
 
-}
 
 #completed-task {
   margin-top: 5px;
