@@ -16,6 +16,7 @@ import {
   Input,
   FormErrorMessage,
   Tooltip,
+  useColorMode,
 } from "@chakra-ui/react";
 
 import { Switch } from "@chakra-ui/react";
@@ -66,6 +67,8 @@ export default function Task({ id, title, description, state }) {
 
     setEditField({ ...editField, [name]: value });
   };
+  const { colorMode } = useColorMode();
+  const backgroundColor = colorMode === "light" ? "whitesmoke" : "#363535";
 
   return (
     <Grid
@@ -75,7 +78,7 @@ export default function Task({ id, title, description, state }) {
       // display="inline-block"
       // width="19.5rem"
       overflow="auto"
-      backgroundColor="whitesmoke"
+      backgroundColor={backgroundColor}
       borderRadius="1rem"
       height={visibility ? "6rem" : "12.5rem"}
     >
@@ -128,6 +131,7 @@ export default function Task({ id, title, description, state }) {
             >
               <Switch
                 // colorScheme="green"
+
                 name="check"
                 size="lg"
                 isChecked={state}
